@@ -7,20 +7,25 @@
     <link rel="stylesheet" href="./style.css" />
     <title>Fotogram</title>
   </head>
-  <body onload="init()">
+  <body onload="render()">
     <header>
       <img src="assets/img/icons/logo.png" alt="Fotogram Logo" />
     </header>
 
     <main>
-      <div class="gallery-content" id="gallery-content">
-      </div>
+      <div class="gallery-content" id="gallery-content"></div>
     </main>
 
     <footer>
       <a href="./pages/impressum.html">Impressum</a> |
       <a href="./pages/privacy-policy.html">Datenschutz</a>
     </footer>
+
+    <div class="overlay d-none" id="overlay" onclick="toggleOverlay()">
+      <div class="overlay-content" id="overlay-content">
+        
+      </div>
+    </div>
   </body>
   <script src="./script.js"></script>
 </html>

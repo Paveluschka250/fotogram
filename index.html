@@ -21,11 +21,13 @@
       <a href="./pages/privacy-policy.html">Datenschutz</a>
     </footer>
 
-    <div class="overlay d-none" id="overlay" onclick="toggleOverlay()">
-      <div class="overlay-content" id="overlay-content">
-        
+    <section class="overlay d-none" id="overlay" onclick="closeOverlay()">
+      <div class="overlay-container">
+        <button onclick="left(); event.stopPropagation()">&#10094;</button>
+        <div onclick="event.stopPropagation()" class="overlay-content" id="overlay-content"></div>
+        <button onclick="right(); event.stopPropagation()">&#10095;</button>
       </div>
-    </div>
+    </section>
   </body>
   <script src="./script.js"></script>
 </html>

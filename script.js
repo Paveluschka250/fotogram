@@ -49,28 +49,49 @@ let gallery = [
 ];
 
 let currentIndex = 0;
+let currentPage = 1;
+const itemsPerPage = 12;
 
 function render() {
-  let contentRef = document.getElementById("gallery-content");
+  const contentRef = document.getElementById("gallery-content");
   contentRef.innerHTML = "";
-  for (let index = 0; index < gallery.length; index++) {
+
+  const end = currentPage * itemsPerPage;
+
+  for (let index = 0; index < end && index < gallery.length; index++) {
     contentRef.innerHTML += getImgTemplate(index);
+  }
+
+  if (end < gallery.length) {
+    contentRef.innerHTML += `
+      <div class="load-more-wrapper">
+        <button onclick="loadMore()" class="load-more-btn">Mehr anzeigen</button>
+      </div>
+    `;
   }
 }
 
+function loadMore() {
+  currentPage++;
+  render();
+}
+
 function getImgTemplate(index) {
-  return /*html*/ `
-        <img loading="lazy" onclick="toggleOverlay(${index})" src=${gallery[index]} />
-    `;
+  return `
+    <img 
+      loading="lazy" 
+      onclick="toggleOverlay(${index})" 
+      src="${gallery[index]}" 
+      alt="Bild ${index + 1}" 
+    />
+  `;
 }
 
 function toggleOverlay(index) {
   currentIndex = index;
-  let overlayRef = document.getElementById("overlay");
-  overlayRef.classList.remove("d-none");
-  let overlayContentRef = document.getElementById("overlay-content");
-  overlayContentRef.innerHTML = /*html*/ `
-    <img src=${gallery[index]}>
+  document.getElementById("overlay").classList.remove("d-none");
+  document.getElementById("overlay-content").innerHTML = `
+    <img src="${gallery[index]}" alt="Großansicht">
   `;
 }
 
@@ -80,16 +101,16 @@ function closeOverlay() {
 
 function left() {
   currentIndex = (currentIndex - 1 + gallery.length) % gallery.length;
-  let overlayContentRef = document.getElementById("overlay-content");
-  overlayContentRef.innerHTML = `<img src="${gallery[currentIndex]}">`;
+  document.getElementById("overlay-content").innerHTML = `
+    <img src="${gallery[currentIndex]}" alt="Großansicht">
+  `;
 }
 
 function right() {
   currentIndex = (currentIndex + 1) % gallery.length;
-  let overlayContentRef = document.getElementById("overlay-content");
-  overlayContentRef.innerHTML = `<img src="${gallery[currentIndex]}">`;
+  document.getElementById("overlay-content").innerHTML = `
+    <img src="${gallery[currentIndex]}" alt="Großansicht">
+  `;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  render();
-});
+document.addEventListener("DOMContentLoaded", render);
